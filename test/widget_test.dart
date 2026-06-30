@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:offline_notes/data/database_helper.dart';
+import 'package:offline_notes/data/notes_local_datasource.dart';
 import 'package:offline_notes/main.dart';
+import 'package:offline_notes/repositories/notes_repository.dart';
+import 'package:offline_notes/services/api_service.dart';
+import 'package:offline_notes/services/connectivity_service.dart';
+import 'package:offline_notes/services/sync_service.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('shows offline notes title', (WidgetTester tester) async {
+    final repository = NotesRepository(
+      NotesLocalDataSource(DatabaseHelper.instance),
+    );
+    final syncService = SyncService(
+      repository: repository,
+      apiService: ApiService(),
+      connectivityService: ConnectivityService(),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpWidget(
+      OfflineNotesApp(
+        repository: repository,
+        syncService: syncService,
+        connectivityService: ConnectivityService(),
+      ),
+    );
+
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Offline Notes'), findsOneWidget);
   });
 }
