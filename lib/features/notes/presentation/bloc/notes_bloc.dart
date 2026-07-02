@@ -10,10 +10,9 @@ import 'notes_state.dart';
 
 class NotesBloc extends Bloc<NotesEvent, NotesState> {
   NotesBloc({
-    required NotesRepository notesRepository,
+    required this._notesRepository,
     NotesState? initialState,
-  })  : _notesRepository = notesRepository,
-        super(initialState ?? const NotesState()) {
+  }) : super(initialState ?? const NotesState()) {
     on<NotesStarted>(_onStarted);
     on<NotesRefreshed>(_onRefreshed);
     on<NotesListReloaded>(_onListReloaded);

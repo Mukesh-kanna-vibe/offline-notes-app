@@ -6,11 +6,10 @@ import '../features/notes/domain/repositories/notes_repository.dart';
 /// Listens for connectivity changes and triggers automatic synchronization.
 class ConnectivityService {
   ConnectivityService({
-    required NetworkInfo networkInfo,
-    required NotesRepository notesRepository,
+    required this._networkInfo,
+    required this._notesRepository,
     this.onSyncCompleted,
-  })  : _networkInfo = networkInfo,
-        _notesRepository = notesRepository;
+  });
 
   final NetworkInfo _networkInfo;
   final NotesRepository _notesRepository;

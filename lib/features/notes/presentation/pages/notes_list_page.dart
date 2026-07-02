@@ -99,9 +99,9 @@ class _NotesListPageState extends State<NotesListPage> {
           context.read<NotesBloc>().add(const ConflictNavigationHandled());
           Navigator.of(context).push(
             PageRouteBuilder<void>(
-              pageBuilder: (_, __, ___) =>
+              pageBuilder: (_, _, _) =>
                   ConflictResolutionPage(noteId: conflictId),
-              transitionsBuilder: (_, animation, __, child) {
+              transitionsBuilder: (_, animation, _, child) {
                 return FadeTransition(
                   opacity: animation,
                   child: SlideTransition(
@@ -343,9 +343,9 @@ class _NotesListPageState extends State<NotesListPage> {
                 if (note.syncStatus == SyncStatus.conflict) {
                   Navigator.of(context).push(
                     PageRouteBuilder<void>(
-                      pageBuilder: (_, __, ___) =>
+                      pageBuilder: (_, _, _) =>
                           ConflictResolutionPage(noteId: note.id),
-                      transitionsBuilder: (_, animation, __, child) {
+                      transitionsBuilder: (_, animation, _, child) {
                         return FadeTransition(
                           opacity: animation,
                           child: child,
@@ -370,8 +370,8 @@ class _NotesListPageState extends State<NotesListPage> {
     _dismissSearchFocus();
     await Navigator.of(context).push(
       PageRouteBuilder<void>(
-        pageBuilder: (_, __, ___) => NoteEditorPage(note: note),
-        transitionsBuilder: (_, animation, __, child) {
+        pageBuilder: (_, _, _) => NoteEditorPage(note: note),
+        transitionsBuilder: (_, animation, _, child) {
           return SlideTransition(
             position: Tween<Offset>(
               begin: const Offset(0, 0.06),

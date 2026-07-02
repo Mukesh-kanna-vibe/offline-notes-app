@@ -14,18 +14,14 @@ import '../models/note_model.dart';
 
 class NotesRepositoryImpl implements NotesRepository {
   NotesRepositoryImpl({
-    required NotesLocalDataSource localDataSource,
-    required SyncQueueLocalDataSource syncQueueDataSource,
-    required NotesRemoteDataSource remoteDataSource,
-    required NetworkInfo networkInfo,
+    required this._localDataSource,
+    required this._syncQueueDataSource,
+    required this._remoteDataSource,
+    required this._networkInfo,
     this.onSyncCompleted,
     this.onConflictDetected,
     Uuid? uuid,
-  })  : _localDataSource = localDataSource,
-        _syncQueueDataSource = syncQueueDataSource,
-        _remoteDataSource = remoteDataSource,
-        _networkInfo = networkInfo,
-        _uuid = uuid ?? const Uuid();
+  }) : _uuid = uuid ?? const Uuid();
 
   final NotesLocalDataSource _localDataSource;
   final SyncQueueLocalDataSource _syncQueueDataSource;
